@@ -25,6 +25,7 @@ app.get('/:ext', function(req, res) {
     case 'pdf':
       res.sendfile('./public/' + filename);
       sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+      console.log('email sent');
       break;
     case 'rtf':
       res.download('./public/' + filename, filename);
@@ -33,6 +34,8 @@ app.get('/:ext', function(req, res) {
     default:
       break;
   }
+
+  console.log("finished processing route for extension: " + extension);
 });
 
 function sendEmail(ip_address, subject) {
@@ -54,9 +57,8 @@ function sendEmailWithData(data, subject) {
     options,
     function(err, result){
       if(err){ console.log(err); }
-  });
-
-  console.log("email sent");
+    }
+  );
 }
 
 
