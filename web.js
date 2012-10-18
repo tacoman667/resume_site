@@ -33,6 +33,8 @@ app.get('/:ext', function(req, res) {
     default:
       break;
   }
+
+  console.log("finished processing route for extension: " + extension);
 });
 
 function sendEmail(ip_address, subject) {
@@ -54,9 +56,8 @@ function sendEmailWithData(data, subject) {
     options,
     function(err, result){
       if(err){ console.log(err); }
-  });
-
-  console.log("email sent");
+    }
+  );
 }
 
 
