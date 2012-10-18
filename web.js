@@ -25,6 +25,7 @@ app.get('/:ext', function(req, res) {
     case 'pdf':
       res.sendfile('./public/' + filename);
       sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+      console.log('email sent');
       break;
     case 'rtf':
       res.download('./public/' + filename, filename);
