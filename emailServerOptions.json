@@ -1,0 +1,10 @@
+{
+	"host" : "smtp.gmail.com",
+    "port" : "25",             
+    "domain" : "smtp.gmail.com",
+    "to" : "jeremy@codingzen.net",
+    "from" : "jeremy@codingzen.net",
+    "authentication" : "login",
+    "username" : "jeremy@codingzen.net",
+    "password" : "for me to poop on"
+}
