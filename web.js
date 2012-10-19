@@ -5,6 +5,7 @@ var jQuery = require('jquery');
 
 var app = express.createServer(express.logger());
 
+
 app.use('/public', express.static(__dirname + "/public"));
 app.use('/images', express.static(__dirname + "/images"));
 
@@ -17,15 +18,12 @@ app.get('/', function(req, res) {
 
 app.get('/:ext', function(req, res) {
   var extension = req.params.ext;
-  if (extension === 'favicon.ico') { return; }
 
   var filename = "resume." + extension;
-  
   switch (extension) {
     case 'pdf':
-      res.sendfile('./public/' + filename);
+      res.download('./public/' + filename, filename);
       sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
-      console.log('email sent');
       break;
     case 'rtf':
       res.download('./public/' + filename, filename);
@@ -34,7 +32,6 @@ app.get('/:ext', function(req, res) {
     default:
       break;
   }
-
   console.log("finished processing route for extension: " + extension);
 });
 
