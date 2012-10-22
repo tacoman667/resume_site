@@ -2,10 +2,10 @@
   "name": "jeremyhardin",
   "version": "1.0.0",
   "dependencies": {
-    "express": "2.5.x",
-    "jquery": "1.x",
-    "mailer": "0.x",
-    "jsdom": "0.2.x"
+    "express": "latest",
+    "jquery": "latest",
+    "mailer": "latest",
+    "jsdom": "latest"
   },
   "engines": {
     "node": "0.8.x",
