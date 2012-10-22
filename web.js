@@ -23,11 +23,11 @@ app.get('/:ext', function(req, res) {
   var filename = "resume." + extension;
   switch (extension) {
     case 'pdf':
-      //res.download('./public/' + filename, filename);
+      res.download('./public/' + filename, filename);
       sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
       break;
     case 'rtf':
-      //res.download('./public/' + filename, filename);
+      res.download('./public/' + filename, filename);
       sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
       break;
     default:
