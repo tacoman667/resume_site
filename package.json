@@ -4,7 +4,8 @@
   "dependencies": {
     "express": "2.5.x",
     "jquery": "1.x",
-    "mailer": "0.x"
+    "mailer": "0.x",
+    "jsdom": "2.x"
   },
   "engines": {
     "node": "0.8.x",
