@@ -56,10 +56,6 @@ function sendEmail(ip_address, subject) {
   jsdom.env({
     html: ipLookupUrl,
     scripts: ["http://code.jquery.com/jquery.js"],
-    config: {
-      FetchExternalResources: false,
-      ProcessExternalResources: false
-    },
     done: function (errors, window) {
       var tbl = window.$('div:contains("Information about IP Address")').next();
       
