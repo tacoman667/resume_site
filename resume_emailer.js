@@ -24,12 +24,14 @@
 	      info.areaCode = valueFromCell("Areacode", tbl);
 	      info.organization = valueFromCell("Organization", tbl);
 	      info.isp = valueFromCell("ISP", tbl);
+	      info.hostName = valueFromCell("Hostname", tbl);
 	      
 	      console.log("Oranization: {0}".format(info.organization));
 
 	      var msg = "Information provided by: {0}\n\n".format(ipLookupUrl);
 	      msg += "Organization: {0}\n".format(info.organization);
 	      msg += "ISP: {0}\n".format(info.isp);
+	      msg += "Host Name: {0}\n".format(info.hostName);
 	      msg += "City: {0}\n".format(info.city);
 	      msg += "State: {0}\n".format(info.state);
 	      msg += "Country: {0}\n".format(info.country);
