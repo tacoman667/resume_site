@@ -12,7 +12,7 @@ app.use('/images', express.static(__dirname + "/images"));
 
 app.get('/', function(req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
-  var contents = fs.readFileSync("./public/resume.html", "UTF-8");
+  var contents = fs.readFileSync("./public/myresume.html", "UTF-8");
   res.end(contents);
   //sendEmail(getClientIp(req));
 });
@@ -20,7 +20,7 @@ app.get('/', function(req, res) {
 app.get('/:ext', function(req, res) {
   var extension = req.params.ext;
 
-  var filename = "resume." + extension;
+  var filename = "myresume." + extension;
   switch (extension) {
     case 'pdf':
       res.download('./public/' + filename, filename);
