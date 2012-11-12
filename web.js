@@ -12,7 +12,7 @@ app.use('/images', express.static(__dirname + "/images"));
 
 app.get('/', function(req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
-  var contents = fs.readFileSync(__dirname + "/public/myresume.html", "UTF-8");
+  var contents = fs.readFileSync(__dirname + "/public/MyResume.html", "UTF-8");
   res.end(contents);
   //sendEmail(getClientIp(req));
 });
@@ -20,15 +20,27 @@ app.get('/', function(req, res) {
 app.get('/:ext', function(req, res) {
   var extension = req.params.ext;
 
-  var filename = "myresume." + extension;
+  var filename = "MyResume." + extension;
   switch (extension) {
     case 'pdf':
-      res.download(__dirname + '/public/' + filename, filename);
-      resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+      res.download(__dirname + '/public/' + filename, filename, function(err) {
+        if (err) {
+          // Oh well for now
+        } else {
+          resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+        }
+      });
+      
       break;
     case 'rtf':
-      res.download(__dirname + '/public/' + filename, filename);
-      resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+      res.download(__dirname + '/public/' + filename, filename, function(err) {
+        if (err) {
+          // Oh well for now
+        } else {
+          resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+        }
+      });
+      
       break;
     default:
       break;
