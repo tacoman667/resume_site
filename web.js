@@ -4,7 +4,7 @@ var resumeEmailer = require('./resume_emailer');
 require('./string_extensions');
 
 
-var app = express.createServer(express.logger());
+var app = express();
 
 
 app.use('/public', express.static(__dirname + "/public"));
