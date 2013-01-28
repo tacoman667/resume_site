@@ -1,11 +1,12 @@
 {
-  "name": "jeremyhardin",
-  "version": "1.0.0",
+  "name": "application-name",
+  "version": "1.0.1",
   "dependencies": {
-    "express": "latest",
-    "jquery": "latest",
-    "mailer": "latest",
-    "jsdom": "latest"
+    "express": "3.1.0",
+    "ejs": "*",
+    "jquery": "*",
+    "mailer": "*",
+    "jsdom": "*"
   },
   "engines": {
     "node": "0.8.x",
