@@ -1,21 +1,30 @@
-var express = require('express');
-var fs = require('fs');
-var resumeEmailer = require('./resume_emailer');
-require('./string_extensions');
+var express = require('express')
+  , routes = require('./routes')
+  , user = require('./routes/user')
+  , http = require('http')
+  , path = require('path')
+  , fs = require('fs')
+  , resumeEmailer = require('./resume_emailer');
 
+require('./string_extensions')
 
 var app = express();
 
-
-app.use('/public', express.static(__dirname + "/public"));
-app.use('/images', express.static(__dirname + "/images"));
-
-app.get('/', function(req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  var contents = fs.readFileSync(__dirname + "/public/MyResume.html", "UTF-8");
-  res.end(contents);
-  //sendEmail(getClientIp(req));
+app.configure(function(){
+  app.set('port', process.env.PORT || 5000);
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
+  app.use(express.favicon());
+  app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(path.join(__dirname, '/public')));
+  app.use(express.static(path.join(__dirname, '/images')));
 });
+
+
+app.get('/', routes.myresume);
 
 app.get('/:ext', function(req, res) {
   var extension = req.params.ext;
@@ -69,7 +78,6 @@ function getClientIp(req) {
 };
 
 // starts the server
-var port = process.env.PORT || 5000;
-app.listen(port, function() {
-  console.log("Listening on " + port);
+http.createServer(app).listen(app.get('port'), function(){
+  console.log("Express server listening on port " + app.get('port'));
 });
