@@ -15,3 +15,10 @@ Contents of the emailServerOptions.json file:
     "password" : "p@ssw0rd"
 }
 ```
+
+Contents of the google_analytics.json file:
+```
+{
+	"key" : "<your key here>"
+}
+```
