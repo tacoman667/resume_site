@@ -15,3 +15,6 @@ node_modules
 npm-debug.log
 
 *.DS_Store
+
+emailserveroptions.json
+google_analytics.json
