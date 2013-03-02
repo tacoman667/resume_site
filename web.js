@@ -23,6 +23,7 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, '/images')));
 });
 
+var pdfDocumentName = 'MyResume.pdf';
 
 app.get('/', routes.myresume);
 
@@ -32,13 +33,17 @@ app.get('/:ext', function(req, res) {
   var filename = "MyResume." + extension;
   switch (extension) {
     case 'pdf':
-      res.download(__dirname + '/public/' + filename, filename, function(err) {
-        if (err) {
-          // Oh well for now
-        } else {
-          resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
-        }
+      renderPdf('./public/resume.html', 'pdf', function() {
+        res.sendfile('./public/' + pdfDocumentName);
+        console.log("pdf sent to client");
       });
+      // res.download(__dirname + '/public/' + filename, filename, function(err) {
+      //   if (err) {
+      //     // Oh well for now
+      //   } else {
+      //     resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
+      //   }
+      // });
       
       break;
     case 'rtf':
@@ -56,6 +61,34 @@ app.get('/:ext', function(req, res) {
   }
   console.log("finished processing route for extension: " + extension);
 });
+
+function renderPdf(url, fileType, callback) {
+  var phantom = require('node-phantom');
+
+  if (fs.existsSync('./public/' + pdfDocumentName)) { 
+    fs.unlinkSync('./public/' + pdfDocumentName);
+    console.log("pdf deleted");
+  }
+
+  phantom.create(function(error, ph) {
+    ph.createPage(function(err, page) {
+      page.set('paperSize', {
+        format: "Letter",
+        orientation: "portrait",
+        border: "1cm"
+      });
+      page.open(url, function(err, status) {
+        page.render('./public/' + pdfDocumentName);
+        console.log("pdf rendered");
+        page.close();
+        setTimeout(function() {
+          callback();
+          ph.exit();
+        }, 200);
+      });
+    });
+  },{phantomPath:require('phantomjs').path});
+}
 
 // gets the client ip address
 function getClientIp(req) {

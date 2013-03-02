@@ -6,7 +6,10 @@
     "ejs": "*",
     "jquery": "*",
     "mailer": "*",
-    "jsdom": "*"
+    "jsdom": "*",
+    "phantomjs": "*",
+    "phantom": "*",
+    "node-phantom": "*"
   },
   "engines": {
     "node": "0.8.x",

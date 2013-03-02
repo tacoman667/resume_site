@@ -108,10 +108,15 @@
 						width: 30px;
 						height: 30px;
 					}
+                    @media print { 
+                        .noprint { 
+                            display:none; 
+                        } 
+                    }
 				</style>
 
         <link rel="openid2.provider" href="https://www.google.com/accounts/o8/ud?source=profiles" >
-				<link rel="openid2.local_id" href="http://www.google.com/profiles/tacoman667" >
+		<link rel="openid2.local_id" href="http://www.google.com/profiles/tacoman667" >
 
         <script type="text/javascript">
 
@@ -130,7 +135,7 @@
     
     <body class="c19">
 	    	<center>
-					<div id="nav">
+					<div id="nav" class="noprint">
 						<a href="/rtf"><image class="file_format" src="/images/rtf_image.png" alt="RTF Format" /></a>
 						<a href="/pdf"><image class="file_format" src="/images/pdf.png" alt="PDF Format" /></a>
 					</div>
