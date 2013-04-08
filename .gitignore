@@ -19,3 +19,4 @@ npm-debug.log
 emailserveroptions.json
 google_analytics.json
 *.patch
+*.pdf
