@@ -11,45 +11,41 @@ require('./string_extensions')
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 5000);
+  app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
-  app.use(express.methodOverride());
+  //app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, '/public')));
   app.use(express.static(path.join(__dirname, '/images')));
 });
 
-var pdfDocumentName = 'MyResume.pdf';
+var pdfDocumentName = 'resume.pdf';
 
 app.get('/', routes.myresume);
 
 app.get('/:ext', function(req, res) {
   var extension = req.params.ext;
 
-  var filename = "MyResume." + extension;
   switch (extension) {
     case 'pdf':
-      renderPdf('./public/resume.html', 'pdf', function() {
-        res.sendfile('./public/' + pdfDocumentName);
+      var fullURL = req.protocol + "://" + req.get('host');
+      renderPdf(fullURL, 'pdf', function() {
+        res.sendfile('./public/' + pdfDocumentName, function (err) {
+          if (err) {
+            console.log(err);
+          }
+        });
         console.log("pdf sent to client");
       });
-      // res.download(__dirname + '/public/' + filename, filename, function(err) {
-      //   if (err) {
-      //     // Oh well for now
-      //   } else {
-      //     resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
-      //   }
-      // });
-      
       break;
     case 'rtf':
-      res.download(__dirname + '/public/' + filename, filename, function(err) {
+      res.download(__dirname + '/public/resume.rtf', 'resume.rtf', function(err) {
         if (err) {
-          // Oh well for now
+          console.log(err);
         } else {
           resumeEmailer.sendEmail(getClientIp(req), "Someone downloaded your resume in " + extension + " format.");
         }
@@ -59,6 +55,7 @@ app.get('/:ext', function(req, res) {
     default:
       break;
   }
+
   console.log("finished processing route for extension: " + extension);
 });
 
@@ -78,13 +75,15 @@ function renderPdf(url, fileType, callback) {
         border: "1cm"
       });
       page.open(url, function(err, status) {
-        page.render('./public/' + pdfDocumentName);
-        console.log("pdf rendered");
-        page.close();
-        setTimeout(function() {
-          callback();
-          ph.exit();
-        }, 200);
+        page.render('./public/' + pdfDocumentName, function(err) {
+          if (err) { console.log(err); }
+          console.log("pdf rendered");
+          page.close();
+          setTimeout(function() {
+            callback();
+            ph.exit();
+          }, 200);
+        });
       });
     });
   },{phantomPath:require('phantomjs').path});
